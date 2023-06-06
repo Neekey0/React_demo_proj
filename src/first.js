@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-//import { Formik, Field, Form, ErrorMessage } from 'formik';
-//import { toastr } from "react-redux-toastr";
+import { Formik, useFormik } from 'formik';
+import { toastr } from "react-redux-toastr";
 
-//import * as Yup from "yup";
+import * as Yup from "yup";
 import { SetEmpFormValues, SetEmpQualificationValues, SaveQualifications, SaveEmpDetail, ResetForm, EditQualification, RemoveQualification, RemoveDetails, EditDetails } from './empAction';
 
 function EmpForm() {
@@ -14,58 +14,36 @@ function EmpForm() {
     const empData = useSelector((state) => state.EmpDetails);
 
     console.log(empData, 'xxxxxxzzzzzzzzzzzz');
-    // const formik = useFormik({
+    const formik = useFormik({
 
-    // const initialValues = {
-    //     empName: "",
-    //     salary: null,
-    //     dob: null,
-    //     description: "",
-    //     gender: ""
-    // }
+        initialValues: empData,
+        validationSchema: validation,
+        onSubmit: (values) => {
+            console.log(values, 'zzzzzzzzzzzzzzzzzzzzzz');
+            console.log("........................val..............", values);
+        }
+        //console.log(initialValues, "initial values extract");
+        // const validate = (values) => {
+        //     let errors = {};
+        //     if (!values.empName) {
+        //         errors.empName = 'Required';
+        //     } else if (values.empName.length > 15) {
+        //         errors.empName = 'Must be 15 characters or less';
+        //     }
+        //     return errors;
 
-    // // function validate(values) {
-    // //     let errors = {};
-    // //     if (initialValues.empName.length < 15) {
-    // //         errors.empName = "Name  must be  less than 15";
-    // //     }
-    // //     if (initialValues.dob || initialValues.dob < 18) {
-    // //         errors.dob = "Minimun age is 18";
-    // //     }
-    // //     if (initialValues.description == null) {
-    // //         errors.description = "Write something";
-    // //     }
-    // //     return errors;
-    // // }
+        // };
+        // //Validation  schemna using YUP
+        // const validationSchema = Yup.object({
+        //     empName: Yup.string().required("Required !!!"),
 
+        //     //.max(10, 'Name must be 1o characters or  less')
 
-    //     validationSchema: validation,
-    //     onSubmit: (values) => {
-    //         console.log(values, 'zzzzzzzzzzzzzzzzzzzzzz');
-    //         console.log("........................val..............", values);
-    //     }
-    //     //console.log(initialValues, "initial values extract");
-    //     // const validate = (values) => {
-    //     //     let errors = {};
-    //     //     if (!values.empName) {
-    //     //         errors.empName = 'Required';
-    //     //     } else if (values.empName.length > 15) {
-    //     //         errors.empName = 'Must be 15 characters or less';
-    //     //     }
-    //     //     return errors;
-
-    //     // };
-    //     // //Validation  schemna using YUP
-    //     // const validationSchema = Yup.object({
-    //     //     empName: Yup.string().required("Required !!!"),
-
-    //     //     //.max(10, 'Name must be 1o characters or  less')
-
-    //     // });
-    //     // const formik = useFormik({
-    //     //     initialValues,
-    //     //     validationSchema,
-    // });
+        // });
+        // const formik = useFormik({
+        //     initialValues,
+        //     validationSchema,
+    });
 
 
 
@@ -178,25 +156,6 @@ function EmpForm() {
 
 
     return (
-
-        //<Formik
-        //     initialValues={{ empName: '', salary: '', dob: '' }}
-        //     validationSchema={Yup.object({
-        //         empName: Yup.string()
-        //             .required('Required!!!'),
-
-        //         salary: Yup.string()
-        //             .required("Required"),
-
-        //     })}
-
-        //     onSubmit={(values, { setSubmitt }) => {
-        //         setTimeout(() => {
-        //             alert(JSON.stringify(values, null, 2));
-        //             setSubmitt(false);
-        //         }, 400);
-        //     }}
-        // >
         <>
             <div className="flex flex-wrap">
                 <div className='flex-initial w-3/5'>
@@ -328,7 +287,6 @@ function EmpForm() {
                             //onBlur={formik.handleBlur}
                             onChange={handleInputChangeForm}
                         />
-                        {/* <ErrorMessage name="empName" /> */}
                         {/* 
                             {formik.touched.empName && formik.errors.empName ? (
                                 <div className="errors text-red-500">
@@ -426,12 +384,14 @@ function EmpForm() {
 
                     </div>
                 </div>
+                {/* </Formik> */}
                 {/* Qualifications list */}
 
             </div >
 
         </>
     )
+
 }
 
 export default EmpForm
