@@ -18,7 +18,7 @@ function TextareaComponent({
             <label className='text-xl px-3 font-bold' htmlFor="">{label}</label> <br />
 
             <textarea
-                className="border border-black focus:border-blue-500 outline-none rounded-md px-4 py-2 my-2"
+                className="border border-black focus:border-blue-500 outline-none rounded-md px-4 py-2 my-2 dark:bg-slate-700"
                 type={type}
                 name={name}
                 value={values}

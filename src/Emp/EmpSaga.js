@@ -8,7 +8,7 @@ function* getQualificationList() {
         const res = yield axios.get("https://localhost:7061/api/Employee/GetQual");
         // 'https://localhost:7061/api/Employee/GetQual' 
 
-        console.log(res, "sagaaaa result");
+        // console.log(res, "sagaaaa result");
         const data = res.data;
         yield put({ type: actionTypes.SET_QUALIFICATION_LIST, data });
     } catch (ex) {
@@ -17,7 +17,8 @@ function* getQualificationList() {
 }
 
 function* saveEmployeeList(action) {
-    console.log(action.data, "ACTION DATA");
+
+    // console.log(action.data, "ACTION DATA");
     let eid = parseInt(action.data.employee_id);
     // let data = action.data;
     try {
@@ -45,7 +46,6 @@ function* saveEmployeeList(action) {
 }
 
 function* getEmployeeList() {
-    console.log("/////////////////////////////////////////////////");
     try {
         const res = yield axios.get("https://localhost:7061/api/Employee");
         const data = res.data;
@@ -61,9 +61,9 @@ function* editEmployee(action) {
         const res = yield axios.get(
             `https://localhost:7061/api/Employee/GetEmployee?id=${id}`
         );
-        console.log(res, "res saaga");
+        // console.log(res, "res saaga");
         const data = res.data;
-        yield put({ type: actionTypes.UPDATE_EMP_QUAL, data });
+        yield put({ type: actionTypes.EDIT_DETAILS, data });
     } catch (ex) {
         console.log(ex);
     }

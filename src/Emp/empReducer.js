@@ -11,8 +11,13 @@ const initialState = {
         EmpQualifications: []
     },
     EmpQualifications: {
-        q_id: "1",
+        q_id: 1,
         // q_Name: "",
+        q_Name: "",
+        marks: ""
+    },
+    Emp_Qualifications: {
+        q_id: 1,
         q_Name: "",
         marks: ""
     },
@@ -42,7 +47,7 @@ const EmpReducer = (state = initialState, action) => {
         case actionTypes.SET_EMP_FORM_VALUES:
 
             obj = {};
-            //console.log(action.data, "action.data")
+            // console.log(action.data, "action.data")
 
             obj[action.data.field] = action.data.value;
             // console.log(action.data, "action.data")
@@ -52,32 +57,69 @@ const EmpReducer = (state = initialState, action) => {
                 EmpDetails: newObj
             }
 
+        // case actionTypes.SET_EMP_QUALIFICATION_VALUES:
+        //     obj = {};
+        //     obj[action.data.field] = action.data.value;
+        //     EmpQualifications = Object.assign({}, state.EmpQualifications, obj)
+        //     return {
+        //         ...state,
+        //         EmpQualifications
+        //     }
+
+
+
         case actionTypes.SET_EMP_QUALIFICATION_VALUES:
             obj = {};
             obj[action.data.field] = action.data.value;
-            EmpQualifications = Object.assign({}, state.EmpQualifications, obj)
+            // console.log(action.index, "indexxxxxdataaaa");
+            //EmpQualifications = Object.assign({}, state.EmpQualifications, obj);
+
+            let qualObjjj = state.QualificationDetail[action.index];
+            let newObjjj = Object.assign({}, qualObjjj, obj);
+            let qualList = state.QualificationDetail.map(
+                (obj, index) => index === action.index ? newObjjj : obj);
+            //
+            console.log(qualList, ".............")
             return {
                 ...state,
-                EmpQualifications
+                QualificationDetail: qualList
+            }
+
+
+        case actionTypes.SET_QUALIFICATION:
+            let Empobj = {};
+            Empobj[action.data.field] = action.data.value;
+            // console.log(Empobj, "empppppobjjjjjj");
+            let Emp_Qualifications = Object.assign({}, state.Emp_Qualifications, Empobj)
+            return {
+                ...state,
+                Emp_Qualifications
             }
 
         case actionTypes.SAVE_QUALIFICATIONS:
-            //console.log(action.data, "Action");
-
+            // console.log(action.data, "Action");
             let index = state.QualificationDetail.findIndex((x) => x.q_id === action.data.q_id);
+            // console.log(index, "indexxx");
+
             if (index === -1) {
                 state.QualificationDetail.push(action.data);
                 let qobj = Object.assign([], state.QualificationDetail);
-                return {
+                // console.log(qobj, "Value of the Obj");
 
+                return {
                     ...state,
                     QualificationDetail: qobj,
                     EmpQualifications: initialState.EmpQualifications
 
                 };
             } else {
+                // console.log(action.data, "Action else if");
+
                 let editObj = Object.assign([], state.QualificationDetail);
+
                 editObj[index] = action.data;
+                //console.log(editObj[index], "Value of Edit Obj");
+
                 return {
                     ...state,
                     QualificationDetail: editObj,
@@ -112,7 +154,6 @@ const EmpReducer = (state = initialState, action) => {
 
         //     }
         // case actionTypes.SAVE_EMP_DETAILS:
-        //     // console.log(action.data, "cjdgdcjvdsucgsduycvujysdcujydsc");
         //     action.data.EmpQualifications = state.QualificationDetail;
 
         //     let empIndex = state.EmpList.findIndex((x) => x.id === action.data.id);
@@ -149,7 +190,15 @@ const EmpReducer = (state = initialState, action) => {
                 ...state,
                 EmpDetails: initialState.EmpDetails,
                 QualificationDetail: [],
+                //EmpQualifications: initialState.EmpQualifications,
+                //Emp_Qualifications: initialState.Emp_Qualifications
 
+            }
+
+        case actionTypes.RESET_QUAL:
+            return {
+                ...state,
+                Emp_Qualifications: initialState.Emp_Qualifications
             }
 
         case actionTypes.EDIT_QUALIFICATIONS:
@@ -158,13 +207,35 @@ const EmpReducer = (state = initialState, action) => {
 
             //state.QualificationDetail.findIndex(obj => obj.QualificationDetail === 1);
             //EmpQualifications = Object.assign({}, state.EmpQualifications, obj)
-            //console.log(action.data, '...EmpQual...')
+            // console.log(action.data, '........EmpQual.......')
+
+
+            // obj = {};
+            // obj[action.data.field] = action.data.value;
+            // let qalObj = state.empQlist.find((x) => x.q_id == action.id);
+            // let newobj = Object.assign({}, qalObj, obj);
+            // let qalList = state.empQlist.map((obj) =>
+            //     obj.q_id == newobj.q_id ? newobj : obj
+            // );
+            // console.log(qalList, "cloneeeeeeeeeeeeeeeeeeeee");
+            // obj = {};
+            // obj[action.data.field] = action.data.value;
+            // let qualObj = state.QualificationDetail
+            // let newObj = Object.assign({},)
+
+            // console.log(obj, "ooooojjjjj");
+
+
+
             return {
                 ...state,
                 EmpQualifications: action.data,
+
+                // Emp_Qualifications: action.data,
                 //EmpQualifications: editData
 
             }
+
 
         /*)   case actionTypes.EDIT_QUALIFICATIONS:
         let editEmp = state.QualificationDetail.find((x) => x.q_Name === action.data);
@@ -220,7 +291,10 @@ const EmpReducer = (state = initialState, action) => {
             return {
                 ...state,
                 EmpDetails: action.data,
-                QualificationDetail: action.data.EmpQualifications
+                // QualificationDetail: action.data.EmpQualifications
+                QualificationDetail: action.data.emp_Qualifications,
+
+
             }
         //for saga set qualification list
         case actionTypes.SET_QUALIFICATION_LIST:
@@ -236,14 +310,12 @@ const EmpReducer = (state = initialState, action) => {
                 EmpList: action.data
 
             }
-        case actionTypes.UPDATE_EMP_QUAL:
-            console.log(action.data, "reducer update data");
-            return {
-                ...state,
-                EmpDetails: action.data,
-                // EmpQualifications: action.data.emp_Qualifications
-                QualificationDetail: action.data.emp_Qualifications,
-            }
+        // case actionTypes.UPDATE_EMP_QUAL:
+        //     return {
+        //         ...state,
+        //         EmpDetails: action.data,
+        //         QualificationDetail: action.data.emp_Qualifications,
+        //     }
         default:
             return updateState
     }

@@ -7,8 +7,13 @@ export const actionTypes =
     RESET_FORM: "RESET_FORM",
     EDIT_QUALIFICATIONS: 'EDIT_QUALIFICATIONS',
     REMOVE_QUALIFICATIONS: 'REMOVE_QUALIFICATIONS',
+
+    RESET_QUAL: "RESET_QUAL",
+
     REMOVE_DETAILS: 'REMOVE_DETAILS',
     EDIT_DETAILS: 'EDIT_DETAILS',
+
+    SET_QUALIFICATION: 'SET_QUALIFICATION',
 
     GET_QUALIFICATION_LIST: 'GET_QUALIFICATION_LIST',
     SET_QUALIFICATION_LIST: 'SET_QUALIFICATION_LIST',
@@ -50,9 +55,18 @@ export const SetEmpFormValues = (data) => {
         data
     }
 }
-export const SetEmpQualificationValues = (data) => {
+export const SetEmpQualificationValues = (data, index) => {
     return {
         type: actionTypes.SET_EMP_QUALIFICATION_VALUES,
+        data,
+        index
+    }
+}
+
+
+export const SetQualification = (data) => {
+    return {
+        type: actionTypes.SET_QUALIFICATION,
         data
     }
 }
@@ -74,6 +88,12 @@ export const SaveEmpDetail = (data) => {
 export const ResetForm = () => {
     return {
         type: actionTypes.RESET_FORM
+    }
+}
+
+export const ResetQualification = () => {
+    return {
+        type: actionTypes.RESET_QUAL
     }
 }
 
@@ -105,12 +125,12 @@ export const EditDetails = (data) => {
     }
 }
 
-export const UpdateDetails = (data) => {
-    return {
-        type: actionTypes.UPDATE_EMP_QUAL,
-        data
-    }
-}
+// export const UpdateDetails = (data) => {
+//     return {
+//         type: actionTypes.UPDATE_EMP_QUAL,
+//         data
+//     }
+// }
 // export const UpdateDetails=(data)=>{
 //     return{
 //         type:actionTypes.UPDATE_DETAILS,
